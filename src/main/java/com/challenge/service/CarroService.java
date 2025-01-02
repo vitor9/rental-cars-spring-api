@@ -15,6 +15,7 @@ import java.io.IOException;
 import org.springframework.core.io.ClassPathResource;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.math.BigDecimal;
 
 @Service
 public class CarroService {
@@ -56,7 +57,17 @@ public class CarroService {
         aluguel.setCliente(cliente);
         aluguel.setDataAluguel(LocalDate.parse(line.substring(4, 12).trim(), formatter)); // 5 a 12: Data do aluguel
         aluguel.setDataDevolucao(LocalDate.parse(line.substring(12, 20).trim(), formatter)); // 13 a 20: Data da devolução
+
+        aluguel.setValor(calculcarValorAluguel(aluguel, carro.getVlrDiaria()));
+
         return aluguel;
+    }
+
+    private BigDecimal calculcarValorAluguel(Aluguel aluguel, BigDecimal vlrDiaria) {
+        long diasAlugados = aluguel.getDataDevolucao().toEpochDay() - aluguel.getDataAluguel().toEpochDay();
+        BigDecimal valorDiaria = vlrDiaria;
+        BigDecimal valorAluguel = valorDiaria.multiply(BigDecimal.valueOf(diasAlugados));
+        return valorAluguel;
     }
 
     private void salvarAluguel(Aluguel aluguel) {
