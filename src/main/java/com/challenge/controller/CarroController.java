@@ -2,6 +2,7 @@ package com.challenge.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.challenge.service.CarroService;
@@ -17,5 +18,10 @@ public class CarroController {
     @GetMapping
     public List<Carro> listarTodosCarros() {
         return carroService.listarTodosCarros();
+    }
+
+    @PostMapping("/processar-arquivo-rtn")
+    public void processarArquivoRTN() {
+        carroService.processarArquivoRTN();
     }
 }

@@ -16,6 +16,10 @@ public class Aluguel {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "carro_id")
+    private Carro carro;
+
+    @ManyToOne
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
 
@@ -49,6 +53,14 @@ public class Aluguel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Carro getCarro() {
+        return carro;
+    }
+
+    public void setCarro(Carro carro) {
+        this.carro = carro;
     }
 
     public Cliente getCliente() {
